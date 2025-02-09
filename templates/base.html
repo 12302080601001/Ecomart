@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecomart - Your Eco-friendly Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Add Font Awesome -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add jQuery for easier DOM manipulation -->
+</head>
+<body class="bg-green-50 text-gray-800">
+
+<header class="bg-green-600 text-white p-4">
+    <nav class="max-w-screen-lg mx-auto flex justify-between items-center">
+        <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRfK4RGAB-FHMbYCh9uXHzZvs-wxuXQtgWCSuqQDLo8F7sGsLNu" alt="Ecomart Logo" class="w-12 h-12 mr-2">
+        <h1 class="text-2xl font-semibold">Ecomart</h1>
+        <div class="space-x-4">
+            <a href="{{ url_for('index') }}" class="text-white">Home</a>
+            <a href="{{ url_for('wishlist') }}" class="text-white">Wishlist</a>
+            <a href="{{ url_for('cart') }}" class="text-white">Cart</a>
+            {% if 'user' in session %}
+                <a href="{{ url_for('logout') }}" class="text-white">Logout</a>
+                <a href="{{ url_for('dashboard') }}" class="text-white">Dashboard</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="text-white">Login</a>
+                <a href="{{ url_for('signup') }}" class="text-white">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<main class="container mx-auto my-6">
+    <form action="{{ url_for('index') }}" method="GET" class="flex items-center mb-4">
+        <input type="text" name="search" placeholder="Search products..." value="{{ request.args.get('search', '') }}" class="border p-2 rounded-l-lg">
+        <button type="submit" class="bg-green-600 text-white p-2 rounded-r-lg">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Reduce, Recycle, Reuse section -->
+<section class="bg-green-600 text-white p-4 text-center">
+    <div class="flex justify-around items-center">
+        <div class="text-center cursor-pointer" id="reduce" data-modal="reduceModal">
+            <i class="fas fa-arrow-down fa-2x"></i> <!-- Reduce Icon -->
+            <p>Reduce</p>
+        </div>
+        <div class="text-center cursor-pointer" id="recycle" data-modal="recycleModal">
+            <i class="fas fa-recycle fa-2x"></i> <!-- Recycle Icon -->
+            <p>Recycle</p>
+        </div>
+        <div class="text-center cursor-pointer" id="reuse" data-modal="reuseModal">
+            <i class="fas fa-sync-alt fa-2x"></i> <!-- Reuse Icon -->
+            <p>Reuse</p>
+        </div>
+    </div>
+</section>
+
+<!-- Modals for each action -->
+<div id="reduceModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-1/2">
+        <h2 class="text-2xl font-semibold">Importance of Reducing</h2>
+        <p>Reducing consumption of resources helps in decreasing waste and energy consumption. By reducing, we minimize the demand for raw materials, which helps conserve the environment and reduce pollution.</p>
+        <button class="close-modal mt-4 bg-green-600 text-white p-2 rounded">Close</button>
+    </div>
+</div>
+
+<div id="recycleModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-1/2">
+        <h2 class="text-2xl font-semibold">Importance of Recycling</h2>
+        <p>Recycling allows us to reprocess materials, reducing the need for new resources. This helps save energy, reduces pollution, and prevents waste from filling landfills, contributing to a cleaner and greener planet.</p>
+        <button class="close-modal mt-4 bg-green-600 text-white p-2 rounded">Close</button>
+    </div>
+</div>
+
+<div id="reuseModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-1/2">
+        <h2 class="text-2xl font-semibold">Importance of Reusing</h2>
+        <p>Reusing products and materials reduces the need for manufacturing new goods, which lowers energy consumption and waste. Reuse promotes a circular economy, extending the lifespan of products and conserving resources.</p>
+        <button class="close-modal mt-4 bg-green-600 text-white p-2 rounded">Close</button>
+    </div>
+</div>
+
+<footer class="bg-green-600 text-white p-4 text-center">
+    &copy; 2025 Ecomart. All rights reserved.
+</footer>
+
+<script>
+    $(document).ready(function() {
+        // Open the modal when icon is clicked
+        $(".cursor-pointer").click(function() {
+            var modalId = $(this).data("modal");
+            $("#" + modalId).removeClass("hidden");
+        });
+
+        // Close the modal
+        $(".close-modal").click(function() {
+            $(this).closest(".modal").addClass("hidden");
+        });
+    });
+</script>
+
+</body>
+</html>

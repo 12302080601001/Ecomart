@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="text-2xl font-semibold mb-4">Your Wishlist</h2>
+    {% if wishlist %}
+        <ul>
+            {% for item in wishlist %}
+                <li class="flex justify-between">
+                    <span>{{ item['name'] }}</span>
+                    <span>${{ item['price'] }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your wishlist is empty.</p>
+    {% endif %}
+{% endblock %}

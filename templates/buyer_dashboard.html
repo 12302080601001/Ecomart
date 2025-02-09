@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">Welcome to your Dashboard</h2>
+
+        <!-- Search bar for product search -->
+        <div class="relative mb-4">
+            <input type="text" id="searchInput" class="w-full p-2 border rounded" placeholder="Search for products..." oninput="searchProducts()">
+            <div id="searchSuggestions" class="absolute bg-white border rounded shadow-md mt-2 w-full hidden"></div>
+        </div>
+
+        <!-- Displaying the products -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for product in products %}
+                <div class="bg-white p-4 rounded shadow-md">
+                    <img src="{{ url_for('static', filename='images/' + product['images'][0]) }}" alt="{{ product['name'] }}" class="w-full h-40 object-cover rounded">
+                    <h3 class="text-xl font-semibold mt-4">{{ product['name'] }}</h3>
+                    <p class="mt-2">{{ product['description'] }}</p>
+                    <p class="text-green-600 font-semibold mt-2">${{ product['price'] }}</p>
+                    <div class="mt-4">
+                        <a href="{{ url_for('add_to_cart', product_id=product['id']) }}" class="p-2 bg-green-600 text-white rounded">Add to Cart</a>
+                        <a href="{{ url_for('add_to_wishlist', product_id=product['id']) }}" class="p-2 bg-green-600 text-white rounded ml-4">Add to Wishlist</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Function to handle searching and showing suggestions
+        function searchProducts() {
+            let query = document.getElementById('searchInput').value;
+
+            if (query.length > 1) {
+                fetch('/search?query=' + query)
+                    .then(response => response.json())
+                    .then(data => {
+                        let suggestions = document.getElementById('searchSuggestions');
+                        suggestions.innerHTML = '';
+                        suggestions.classList.remove('hidden');
+
+                        // Show search suggestions dynamically
+                        data.suggestions.forEach(product => {
+                            let div = document.createElement('div');
+                            div.classList.add('p-2', 'cursor-pointer');
+                            div.innerText = product.name;
+                            div.onclick = function () {
+                                window.location.href = '/product_details/' + product.id;  // Redirect to product details
+                            };
+                            suggestions.appendChild(div);
+                        });
+                    });
+            } else {
+                document.getElementById('searchSuggestions').classList.add('hidden');
+            }
+        }
+    </script>
+{% endblock %}

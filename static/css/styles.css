@@ -1,0 +1,153 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+nav {
+    background-color: #333;
+    padding: 15px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Product Cards */
+.product-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.product-card img {
+    width: 200px;
+    height: auto;
+}
+
+.product-card h3 {
+    margin: 15px 0;
+}
+
+.product-card p {
+    color: #777;
+}
+
+.product-card .price {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Product Details */
+.product-details img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 8px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+/* Small Buttons */
+.small-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    display: inline-block;
+}
+
+.small-button:hover {
+    background-color: #218838;
+}
+
+/* Cart & Wishlist */
+.cart-item, .wishlist-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-item img, .wishlist-item img {
+    width: 50px;
+    height: auto;
+}
+
+.cart-total, .wishlist-total {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.checkout-button {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #007bff;
+}
+
+.checkout-button a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}

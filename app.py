@@ -25,6 +25,9 @@ products = [
     {"id": 2, "name": "Upcycled Chair", "price": 30, "description": "A unique upcycled chair", "images": ["product2.png"]},
     {"id": 3, "name": "Recycled Shelf", "price": 40, "description": "A stylish recycled shelf", "images": ["product3.png"]},
     {"id": 4, "name": "Upcycled Lamp", "price": 20, "description": "A charming upcycled lamp", "images": ["product4.png"]},
+    {"id": 5, "name": "Upcycled Denim Tote Bag", "price": 15, "description": "A trendy and durable tote bag made from old denim jeans, ideal for carrying groceries, books, or everyday items.", "images": ["product5.png"]},
+    {"id": 6, "name": "Recycled Paper Notebook", "price": 10, "description": "A sustainable and environmentally friendly notebook made from recycled paper, perfect for jotting down notes, ideas, or sketches.", "images": ["product6.png"]},
+
 ]
 
 @app.route('/')

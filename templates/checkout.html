@@ -2,8 +2,49 @@
 
 {% block content %}
     <h2 class="text-2xl font-semibold mb-4">Checkout</h2>
-    <p>Thank you for your order! Your payment is being processed.</p>
+
+    <!-- Address Section -->
+    <form id="checkout-form" action="{{ url_for('checkout') }}" method="POST">
+        <label class="block mb-2 font-semibold">Select or Enter Address:</label>
+        <select id="address-select" name="saved_address" class="w-full p-2 border rounded mb-4">
+            <option value="">-- Choose Saved Address --</option>
+            <option value="123 Main Street, City">123 Main Street, City</option>
+            <option value="456 Elm Street, Town">456 Elm Street, Town</option>
+        </select>
+
+        <input type="text" id="new-address" name="address" class="w-full p-2 border rounded mb-4" placeholder="Or enter new address">
+
+        <!-- Hidden input to store final selected address -->
+        <input type="hidden" id="final-address" name="final_address">
+
+        <!-- Payment Section -->
+        <label class="block mb-2 font-semibold">Enter Payment Details:</label>
+        <input type="text" id="card-number" name="card_number" class="w-full p-2 border rounded mb-4" placeholder="Card Number (e.g., 1234 5678 9101 1121)" 
+               pattern="[0-9\s]{13,19}" title="Enter a valid 13-19 digit card number" required>
+
+        <input type="text" id="expiry-date" name="expiry_date" class="w-full p-2 border rounded mb-4" placeholder="Expiry Date (MM/YY)" 
+               pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Enter a valid expiry date in MM/YY format" required>
+
+        <input type="text" id="cvv" name="cvv" class="w-full p-2 border rounded mb-4" placeholder="CVV" pattern="\d{3,4}" 
+               title="Enter a 3 or 4-digit CVV" required>
+
+        <!-- Pay Now Button -->
+        <button type="submit" class="w-full p-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Pay Now</button>
+    </form>
+
+    <!-- Back to Home Button -->
     <div class="mt-4">
-        <a href="{{ url_for('index') }}" class="w-full p-2 bg-green-600 text-white rounded text-center">Back to Home</a>
+        <a href="{{ url_for('index') }}" class="block w-full p-2 bg-gray-500 text-white rounded text-center hover:bg-gray-600 transition">Back to Home</a>
     </div>
+
+    <script>
+        document.getElementById("checkout-form").addEventListener("submit", function(event) {
+            let savedAddress = document.getElementById("address-select").value;
+            let newAddress = document.getElementById("new-address").value;
+
+            // Set the final address value before submission
+            document.getElementById("final-address").value = newAddress ? newAddress : savedAddress;
+        });
+    </script>
+
 {% endblock %}

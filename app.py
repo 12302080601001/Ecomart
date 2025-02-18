@@ -6,7 +6,7 @@ import re
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)  # Generate a secure secret key
+app.secret_key = os.urandom(24)  # Secure secret key
 
 # Image upload directory
 UPLOAD_FOLDER = "static/uploads/"
@@ -25,9 +25,8 @@ products = [
     {"id": 2, "name": "Upcycled Chair", "price": 30, "description": "A unique upcycled chair", "images": ["product2.png"]},
     {"id": 3, "name": "Recycled Shelf", "price": 40, "description": "A stylish recycled shelf", "images": ["product3.png"]},
     {"id": 4, "name": "Upcycled Lamp", "price": 20, "description": "A charming upcycled lamp", "images": ["product4.png"]},
-    {"id": 5, "name": "Upcycled Denim Tote Bag", "price": 15, "description": "A trendy and durable tote bag made from old denim jeans, ideal for carrying groceries, books, or everyday items.", "images": ["product5.png"]},
-    {"id": 6, "name": "Recycled Paper Notebook", "price": 10, "description": "A sustainable and environmentally friendly notebook made from recycled paper, perfect for jotting down notes, ideas, or sketches.", "images": ["product6.png"]},
-
+    {"id": 5, "name": "Upcycled Denim Tote Bag", "price": 15, "description": "A trendy and durable tote bag made from old denim jeans.", "images": ["product5.png"]},
+    {"id": 6, "name": "Recycled Paper Notebook", "price": 10, "description": "A sustainable notebook made from recycled paper.", "images": ["product6.png"]},
 ]
 
 @app.route('/')
@@ -78,20 +77,6 @@ def signup():
         return redirect(url_for('dashboard'))
 
     return render_template('signup.html')
-
-@app.route('/forgot_password', methods=['GET', 'POST'])
-def forgot_password():
-    if request.method == 'POST':
-        email = request.form['email']
-
-        if email not in users:
-            return "Email not found."
-
-        new_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-        users[email]['password'] = generate_password_hash(new_password)
-        return f"Your new password is: {new_password}"
-
-    return render_template('forgot_password.html')
 
 @app.route('/dashboard')
 def dashboard():
@@ -156,12 +141,45 @@ def cart():
     cart = users[session['user']]['cart']
     return render_template('cart.html', cart=cart)
 
-@app.route('/checkout')
+@app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if 'user' not in session:
         return redirect(url_for('login'))
 
+    if request.method == 'POST':
+        address = request.form['address']
+        card_number = request.form['card_number']
+        expiry_date = request.form['expiry_date']
+        cvv = request.form['cvv']
+
+        # Simulate payment processing (random success or failure)
+        if random.choice([True, False]):
+            users[session['user']]['cart'].clear()  # Clear cart after successful purchase
+            return redirect(url_for('order_success'))
+        else:
+            return redirect(url_for('order_failure'))
+
     return render_template('checkout.html')
+
+@app.route('/order_success')
+def order_success():
+    return render_template('order_success.html')
+
+@app.route('/order_failure')
+def order_failure():
+    return render_template('order_failure.html')
+
+@app.route('/payment')
+def payment():
+    return render_template('payment.html')
+
+@app.route('/payment_success')
+def payment_success():
+    return render_template('payment_success.html')
+
+@app.route('/payment_failure')
+def payment_failure():
+    return render_template('payment_failure.html')
 
 @app.route('/add_to_wishlist/<int:product_id>')
 def add_to_wishlist(product_id):

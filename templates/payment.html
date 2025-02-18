@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2 class="text-2xl font-semibold mb-4">Processing Payment...</h2>
+    
+    <div class="text-center">
+        <p>Please wait while we process your payment.</p>
+        <div class="loader"></div> <!-- Animated loader -->
+    </div>
+
+    <script>
+        setTimeout(function () {
+            // Simulate success or failure
+            let success = Math.random() < 0.8; // 80% chance of success
+
+            if (success) {
+                window.location.href = "{{ url_for('payment_success') }}";
+            } else {
+                window.location.href = "{{ url_for('payment_failure') }}";
+            }
+        }, 3000); // Simulate 3-second processing delay
+    </script>
+
+    <style>
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #28a745;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+{% endblock %}
